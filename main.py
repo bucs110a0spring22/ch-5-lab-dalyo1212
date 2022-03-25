@@ -32,6 +32,88 @@ import time
 #                   Your Code Goes Below                #
 #########################################################
 
+def drawSquare(darty, width, top_left_x, top_left_y):
+  darty.up()
+  darty.goto(top_left_x, top_left_y)
+  darty.down()
+  for i in range(4):
+    darty.forward(width)
+    darty.right(90)
+
+def drawLine(darty, x_start, y_start, x_end, y_end):
+  darty.up()
+  darty.goto(x_start, y_start)
+  darty.down()
+  darty.goto(x_end, y_end)
+  
+def drawCircle(darty, radius):
+  darty.up()
+  darty.goto(0, -radius)
+  darty.down()
+  darty.circle(radius,steps=360)
+  
+
+def setUpDartboard(window, darty):
+  window.setworldcoordinates(-2, -2, 2, 2)
+  drawSquare(darty, 2, -1, 1)
+  drawLine(darty, -1, 0, 1, 0)      
+  drawLine(darty, 0, -1, 0, 1)
+  drawCircle(darty, -1)
+
+
+def throwDart(darty):
+  x_coordinate=random.uniform(-1, 1)
+  y_coordinate=random.unifrom(-1, 1)
+  darty.up()
+  darty.goto(x_coordinate, y_coordinate)
+  if darty.distance(0, 0)<1:
+    darty.color("blue")
+  elif darty.distance(0, 0)>1:
+    darty.color("Black")
+  darty.dot()
+  darty.color("Red")
+
+
+def drawSquareisInCircle(darty):
+  if darty.distance(0, 0)<1:
+    return True
+  elif darty.distance(0, 0)>1:
+    return False
+
+def playDarts(darty): 
+  player1score = 0
+  player2score = 0
+  player1 = throwDart
+  player2 = throwDart
+  for i in range(10):
+    player1(darty)
+    if darty.isInCircle(darty):
+      player1score += 1
+    player2(darty)
+    if darty.isInCircle(darty):
+      player2score += 1 
+    print("Player 1 Score:" + str(player1score))
+    print("Player 2 Score:" + str(player2score))
+  if player1score > player2score:
+    print("Player 1 Wins!")
+  if player2score > player1score:
+    print("Player 2 Wins!")
+  elif player1score == player2score:
+    print("Tie! GAME OVER!")
+
+  
+def montePi(darty, number_darts):
+  pi = throwDart
+  pi_num = 0
+  for i in range(number_darts):
+    pi(darty)
+    if darty.isInCircle(darty):
+      pi_num += 1
+  return (pi_num/number_darts*4)
+
+
+
+
 
 
 #########################################################
@@ -39,8 +121,6 @@ import time
 #       Your code must work with the main proivided     #
 #########################################################
 def main():
-    # Get number of darts for simulation from user
-    # Note continuation character <\> so we don't go over 78 columns:
     print("This is a program that simulates throwing darts at a dartboard\n" \
         "in order to approximate pi: The ratio of darts in a unit circle\n"\
         "to the total number of darts in a 2X2 square should be\n"\
@@ -50,10 +130,9 @@ def main():
     #Create window, turtle, set up window as dartboard
     window = turtle.Screen()
     darty = turtle.Turtle()
-    darty.speed(0) # as fast as it will go!
+    darty.speed(0) 
     setUpDartboard(window, darty)
 
-    # Loop for 10 darts to test your code
     for i in range(10):
         throwDart(darty)
     print("\tPart A Complete...")
@@ -62,22 +141,19 @@ def main():
     setUpDartboard(window, darty)
     playDarts(darty)
     print("\tPart B Complete...")
-    # Keep the window up until dismissed
     print("=========== Part C ===========")
     darty.clear()
     setUpDartboard(window, darty)
     
-    # Includes the following code in order to update animation periodically
-    # instead of for each throw (saves LOTS of time):
+
     BATCH_OF_DARTS = 5000
     window.tracer(BATCH_OF_DARTS)
 
-    # Conduct simulation and print result
+    
     number_darts = int(input("\nPlease input the number of darts to be thrown in the simulation:  "))
     approx_pi = montePi(darty, number_darts)
     print("\nThe estimation of pi using "+str(number_darts)+" virtual darts is " + str(approx_pi))
     print("\tPart C Complete...")
-    # Don't hide or mess with window while it's 'working'
     window.exitonclick()
 
 main()

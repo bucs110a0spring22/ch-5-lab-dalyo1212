@@ -11,15 +11,15 @@ _Replace anything surrounded by the `< >` symbols._
  < Provide a short description of your program's functionality. No more than a couple sentences. >
 
 ## GRACE DAYS
-Grace days used for this assignment: < # >
+Grace days used for this assignment: 1
 
-Grace days remaining: < # >/5
+Grace days remaining: 3/5
 
 ## KNOWN BUGS AND INCOMPLETE PARTS:
- < What parts of the project you were not able to complete >
+ I was not able to figure out how to fix my error messages. 
 
 ## REFERENCES:
- < List any outside resources used >
+ N/A
 
 ## MISCELLANEOUS COMMENTS:
- < Anything you would like the grader to know >
+ This is incomplete i just dont know how to do the rest. I also dont want to use up all of my grace days trying to figure it out.
